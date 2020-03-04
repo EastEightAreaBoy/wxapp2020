@@ -1,6 +1,7 @@
 package com.wangzj.wxapp.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author wzj
@@ -8,4 +9,10 @@ import org.springframework.stereotype.Controller;
  **/
 @Controller
 public class IndexController {
+
+    @GetMapping("hello")
+    public String validate() {
+        return "ok";
+    }
+
 }
