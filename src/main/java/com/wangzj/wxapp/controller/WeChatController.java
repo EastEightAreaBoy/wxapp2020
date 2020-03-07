@@ -1,10 +1,13 @@
 package com.wangzj.wxapp.controller;
 
 import com.wangzj.wxapp.util.SignatureUtil;
+import jdk.nashorn.internal.runtime.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 public class WeChatController {
 
@@ -21,6 +24,8 @@ public class WeChatController {
                            @RequestParam(value = "timestamp") String timestamp,
                            @RequestParam(value = "nonce") String nonce,
                            @RequestParam(value = "echostr") String echostr) {
-        return SignatureUtil.check(signature, timestamp, nonce) ? echostr : null;
+        String s = SignatureUtil.check(signature, timestamp, nonce) ? echostr : null;
+        log.info("wechat:{}", s);
+        return s;
     }
 }
