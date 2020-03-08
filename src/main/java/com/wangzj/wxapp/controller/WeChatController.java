@@ -4,11 +4,13 @@ import com.wangzj.wxapp.util.SignatureUtil;
 import jdk.nashorn.internal.runtime.logging.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
+@RequestMapping("/wechat")
 public class WeChatController {
 
     /**
@@ -19,13 +21,15 @@ public class WeChatController {
      * nonce     微信端发来的随机字符串
      * echostr   微信端发来的验证字符串
      */
-    @GetMapping(value = "wechat")
+    @GetMapping(value = "/sign")
     public String validate(@RequestParam(value = "signature") String signature,
                            @RequestParam(value = "timestamp") String timestamp,
                            @RequestParam(value = "nonce") String nonce,
                            @RequestParam(value = "echostr") String echostr) {
+        log.info("微信进行签名的验证 signature:{}, timestamp:{}, nonce:{}, echostr:{}", signature, timestamp, nonce, echostr);
         String s = SignatureUtil.check(signature, timestamp, nonce) ? echostr : null;
-        log.info("wechat:{}", s);
-        return s;
+        log.info("微信进行签名的验证 s:{}", s);
+        return echostr;
     }
+
 }
